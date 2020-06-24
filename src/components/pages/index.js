@@ -1,0 +1,1 @@
+export {default as MoviesPage} from './moviesPage/moviesPage.jsx';

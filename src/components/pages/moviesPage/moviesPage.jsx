@@ -17,8 +17,14 @@ export default class MoviesPage extends Component {
 
     async setMovieData() {
         try {
-            const data = await this.getService.getMovies(1);
-            console.log('data: ', data);
+            const {results, page, total_pages} = await this.getService.getMovies(1);
+            this.setState({
+                movies: [...this.state.movies, ...results],
+                firstSection: results[0],
+                currentPage: page,
+                loading: false,
+                totalPages: total_pages,
+            })
         } catch (error) {
             // onError
             console.log(error);
@@ -26,10 +32,12 @@ export default class MoviesPage extends Component {
     }
 
     componentDidMount() {
+        this.setState({loading: true});
         this.setMovieData();
     }
 
     render() {
+        console.log(this.state);
         return (
             <>
                 <div>Movies Page</div>

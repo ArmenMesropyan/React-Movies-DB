@@ -18,9 +18,10 @@ export default class MoviesPage extends Component {
     async setMovieData(currentPage) {
         try {
             const {results, page, total_pages} = await this.getService.getMovies(currentPage);
+            const randomNum = Math.floor(Math.random() * 20 / 1);
             this.setState({
                 movies: [...this.state.movies, ...results],
-                firstSection: results[0],
+                firstSection: results[randomNum],
                 currentPage: page,
                 loading: false,
                 totalPages: total_pages,
@@ -53,9 +54,9 @@ export default class MoviesPage extends Component {
     render() {
         const {firstSection, loading} = this.state;
         return (
-            <main className="movies-page">
+            <div className="movies-page">
                 {loading ? <div>Spinner</div> : <Home movie={firstSection}/>}
-            </main>
+            </div>
         );
     }
 }

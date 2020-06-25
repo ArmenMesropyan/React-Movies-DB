@@ -11,6 +11,7 @@ export default class App extends Component {
             <div className="app">
               <Header/>
               <main className="app__main app-main">
+                <h1 className="visually-hidden">Movies Database Application, best way to search your lovely films!</h1>
                 <MoviesPage />
               </main>
             </div>

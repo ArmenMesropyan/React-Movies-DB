@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Home} from '../../';
 
 export default class MoviesPage extends Component {
 
@@ -6,7 +7,10 @@ export default class MoviesPage extends Component {
 
     render() {
         return (
-            <div>Movies Page</div>
+            <>
+                <div>Movies Page</div>
+                <Home />
+            </>
         );
     }
 }

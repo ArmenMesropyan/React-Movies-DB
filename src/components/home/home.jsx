@@ -28,8 +28,8 @@ export default class Home extends Component {
         return (
             <section className="movies-page__first first-section" style={{
                 background: 
-                `linear-gradient(to bottom, rgba(0, 0, 0, 0) 39%,rgba(0,0,0,0) 41%, rgba(0,0,0,0.65) 100%),
-                url(${backgroundImage}) top center / cover, #1c1c1c`
+                `linear-gradient(rgba(0, 0, 0, 0) , rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%), url(${backgroundImage}) center top / cover, rgb(28, 28, 28)`
+                
             }}>
                 <Container>
                     <div className="first-section__text">

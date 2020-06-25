@@ -15,9 +15,9 @@ export default class MoviesPage extends Component {
 
     getService = new GetService();
 
-    async setMovieData() {
+    async setMovieData(currentPage) {
         try {
-            const {results, page, total_pages} = await this.getService.getMovies(1);
+            const {results, page, total_pages} = await this.getService.getMovies(currentPage);
             this.setState({
                 movies: [...this.state.movies, ...results],
                 firstSection: results[0],
@@ -31,9 +31,24 @@ export default class MoviesPage extends Component {
         }
     }
 
+    loadMoreMovies = async() => {
+        try {
+            let data;
+            const {searchTerm, currentPage} = this.state;
+
+            if(searchTerm) data = await this.getService.getMoviesByQuery(searchTerm, currentPage + 1);
+            else data = await this.setMovieData(currentPage + 1);
+            console.log('data: ', data);
+
+        } catch (error) {
+            // onError
+            console.log(error);
+        }
+    }
+
     componentDidMount() {
         this.setState({loading: true});
-        this.setMovieData();
+        this.setMovieData(1);
     }
 
     render() {

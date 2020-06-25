@@ -26,4 +26,15 @@ export default class GetService {
             return Promise.reject(error);
         }
     }
+
+    getMoviesByQuery = async(query, page) => {
+        try {
+            const { movieAPI, movieKey } = this.config;
+            const endpoint = `${movieAPI}movie/popular?api_key=${movieKey}&language=en-US&query=${query}&page=${page}`;
+            const data = await this.fetchData(endpoint)
+            return data;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 }

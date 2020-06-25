@@ -24,7 +24,7 @@ export default class Home extends Component {
 
     render() {
         const { backgroundImage, title, overview } = this.state;
-        console.log('backgroundImage: ', backgroundImage);
+
         return (
             <section className="movies-page__first first-section" style={{
                 background: 

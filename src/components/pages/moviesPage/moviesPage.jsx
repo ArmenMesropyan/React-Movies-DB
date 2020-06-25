@@ -7,7 +7,7 @@ export default class MoviesPage extends Component {
     state = {
         movies: [],
         firstSection: null,
-        loading: false,
+        loading: true,
         currentPage: 0,
         totalPages: 0,
         searchTerm: '',
@@ -39,7 +39,6 @@ export default class MoviesPage extends Component {
             if(searchTerm) data = await this.getService.getMoviesByQuery(searchTerm, currentPage + 1);
             else data = await this.setMovieData(currentPage + 1);
             console.log('data: ', data);
-
         } catch (error) {
             // onError
             console.log(error);
@@ -52,12 +51,11 @@ export default class MoviesPage extends Component {
     }
 
     render() {
-        console.log(this.state);
+        const {firstSection, loading} = this.state;
         return (
-            <>
-                <div>Movies Page</div>
-                <Home />
-            </>
+            <main className="movies-page">
+                {loading ? <div>Spinner</div> : <Home movie={firstSection}/>}
+            </main>
         );
     }
 }

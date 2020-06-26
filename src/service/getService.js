@@ -42,4 +42,9 @@ export default class GetService {
         const { imageURL, backgroundSize } = this.config;
         return `${imageURL}${backgroundSize}${url}`
     }
+
+    getPosterImage(url) {
+        const { imageURL, posterSize } = this.config;
+        return `${imageURL}${posterSize}${url}`
+    }
 }

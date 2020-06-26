@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Home, Search, LoadMore} from '../../';
+import {Home, Search, LoadMore, MoviesList} from '../../';
 import {GetService} from '../../../service';
 
 export default class MoviesPage extends Component {
@@ -29,7 +29,6 @@ export default class MoviesPage extends Component {
                 loading: false,
                 totalPages: total_pages,
             });
-            window.scrollTo(0, 619);
         } catch (error) {
             // onError
             console.log(error);
@@ -46,7 +45,6 @@ export default class MoviesPage extends Component {
                 loading: false,
                 totalPages: total_pages,
             });
-            window.scrollTo(0, 619);
         } catch (error) {
             // onError
             console.log(error);
@@ -72,8 +70,6 @@ export default class MoviesPage extends Component {
 
     onLoadMoreClick = (e) => {
         const {currentPage, searchTerm, totalPages} = this.state;
-        console.log('totalPages: ', totalPages);
-        console.log('currentPage: ', currentPage);
 
         if(currentPage > totalPages) return;
 
@@ -84,11 +80,11 @@ export default class MoviesPage extends Component {
 
     render() {
         const {firstSection, loading, movies} = this.state;
-        console.log('movies', movies);
         return (
             <div className="movies-page">
                 {loading ? <div>Spinner</div> : <Home movie={firstSection}/>}
                 <Search onInputChange={this.onInputChange}/>
+                {loading ? <div>Spinner</div> : <MoviesList movies={movies}/>}
                 <LoadMore onLoadMoreClick={this.onLoadMoreClick}/>
             </div>
         );

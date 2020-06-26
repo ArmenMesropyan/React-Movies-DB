@@ -84,8 +84,8 @@ export default class MoviesPage extends Component {
             <div className="movies-page">
                 {loading ? <div>Spinner</div> : <Home movie={firstSection}/>}
                 <Search onInputChange={this.onInputChange}/>
-                {loading ? <div>Spinner</div> : <MoviesList movies={movies}/>}
-                <LoadMore onLoadMoreClick={this.onLoadMoreClick}/>
+                {/* {loading ? <div>Spinner</div> : <MoviesList movies={movies}/>} */}
+                {/* <LoadMore onLoadMoreClick={this.onLoadMoreClick}/> */}
             </div>
         );
     }

@@ -7,27 +7,33 @@ export default class MoviesPage extends Component {
     state = {
         movies: [],
         firstSection: null,
-        loading: true,
+        homeLoading: true,
+        moviesLoading: false,
+        loadMore: false,
         currentPage: 0,
         totalPages: 0,
         searchTerm: '',
+        title: '',
     }
 
     getService = new GetService();
 
-    async setMovieData(currentPage = 1, action = 'search') {
+    async setMovieData(currentPage = 1, action = 'load') {
         try {
             const {results, page, total_pages} = await this.getService.getMovies(currentPage);
             const randomNum = Math.floor(Math.random() * 20 / 1);
-            const firstSection = action === 'search' ? results[randomNum] : this.state.firstSection;
-            const movies = action === 'search' ? [...results] : [...this.state.movies, ...results];
+            const firstSection = action === 'load' ? results[randomNum] : this.state.firstSection;
+            const movies = action === 'load' ? [...results] : [...this.state.movies, ...results];
+            const title = action === 'load' ? 'Popular Movies' : 'Search Results';
 
             this.setState({
                 movies,
                 firstSection,
                 currentPage: page,
-                loading: false,
+                homeLoading: false,
+                moviesLoading: false,
                 totalPages: total_pages,
+                title,
             });
         } catch (error) {
             // onError
@@ -39,11 +45,13 @@ export default class MoviesPage extends Component {
         try {
             const {results, page, total_pages} = await this.getService.getMoviesByQuery(search, currentPage);
             const movies = action === 'load' ? [...this.state.movies, ...results] : [...results];
+            const title = action === 'search' ? 'Search Results' : 'Popular Movies';
             this.setState({
                 movies,
                 currentPage: page,
-                loading: false,
+                moviesLoading: false,
                 totalPages: total_pages,
+                title
             });
         } catch (error) {
             // onError
@@ -58,13 +66,14 @@ export default class MoviesPage extends Component {
     }
 
     componentDidMount() {
-        this.setState({loading: true});
+        this.setState({homeLoading: true, moviesLoading: true});
         this.setMovieData();
     }
 
     onInputChange = (e) => {
         const {value} = e.target;
 
+        this.setState({moviesLoading: true});
         this.loadMovies(value);
     }
 
@@ -73,18 +82,18 @@ export default class MoviesPage extends Component {
 
         if(currentPage > totalPages) return;
 
-        this.setState({loading: true});
+        this.setState({loadMore: true});
         if (searchTerm) this.setMoviesByQuery(searchTerm, currentPage + 1, 'load');
         else this.setMovieData(currentPage + 1, 'load');
     }
 
     render() {
-        const {firstSection, loading, movies} = this.state;
+        const {firstSection, homeLoading, movies, title, moviesLoading} = this.state;
         return (
             <div className="movies-page">
-                {loading ? <div>Spinner</div> : <Home movie={firstSection}/>}
+                {homeLoading ? <div>Spinner</div> : <Home movie={firstSection}/>}
                 <Search onInputChange={this.onInputChange}/>
-                {/* {loading ? <div>Spinner</div> : <MoviesList movies={movies}/>} */}
+                {moviesLoading ? <div>Spinner</div> : <MoviesList movies={movies} title={title}/>}
                 {/* <LoadMore onLoadMoreClick={this.onLoadMoreClick}/> */}
             </div>
         );

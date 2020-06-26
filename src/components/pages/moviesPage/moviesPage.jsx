@@ -28,7 +28,8 @@ export default class MoviesPage extends Component {
                 currentPage: page,
                 loading: false,
                 totalPages: total_pages,
-            })
+            });
+            window.scrollTo(0, 619);
         } catch (error) {
             // onError
             console.log(error);
@@ -45,6 +46,7 @@ export default class MoviesPage extends Component {
                 loading: false,
                 totalPages: total_pages,
             });
+            window.scrollTo(0, 619);
         } catch (error) {
             // onError
             console.log(error);
@@ -68,7 +70,7 @@ export default class MoviesPage extends Component {
         this.loadMovies(value);
     }
 
-    onLoadMoreClick = () => {
+    onLoadMoreClick = (e) => {
         const {currentPage, searchTerm, totalPages} = this.state;
         console.log('totalPages: ', totalPages);
         console.log('currentPage: ', currentPage);
